@@ -53,35 +53,34 @@ def scrape_top_list():
 # pprint (scrape_top_list())
 
 
-# # this function for year to movie     (task 2)
-# def grup_by_year():
-# 	data=scrape_top_list()
-# 	by_year={}
-# 	for i in data:
-# 		if i["year"] not in by_year:
-# 			by_year[i["year"]]=[]
-# 			by_year[i["year"]].append(i)
-# 		else:
-# 			by_year[i["year"]].append(i)
-# 	return by_year
-# # pprint (grup_by_year())
+# this function for year to movie     (task 2)
+def grup_by_year():
+	data=scrape_top_list()
+	by_year={}
+	for i in data:
+		if i["year"] not in by_year:
+			by_year[i["year"]]=[]
+			by_year[i["year"]].append(i)
+		else:
+			by_year[i["year"]].append(i)
+	return by_year
+# pprint (grup_by_year())
 
 
-
-# # this function for decade     (task 3)
-# def grup_by_decade():
-# 	data=scrape_top_list()[:10]
-# 	decade={}
-# 	for i in data:
-# 		year=str(i["year"])
-# 		key_year=year[0:3]+"0"
-# 		if key_year not in decade:
-# 			decade[key_year]=[]
-# 			decade[key_year].append(i)
-# 		else:
-# 			decade[key_year].append(i)
-# 	return decade
-# # pprint (grup_by_decade())
+# this function for decade     (task 3)
+def grup_by_decade():
+	data=scrape_top_list()[:10]
+	decade={}
+	for i in data:
+		year=str(i["year"])
+		key_year=year[0:3]+"0"
+		if key_year not in decade:
+			decade[key_year]=[]
+			decade[key_year].append(i)
+		else:
+			decade[key_year].append(i)
+	return decade
+# pprint (grup_by_decade())
 
 
 # task 4
@@ -353,4 +352,4 @@ def actors_count(movie_list):    # count actor movie
 			else:
 				count_dict[i["imdb_id"]]["num_movies"]+=1
 	return count_dict
-pprint (actors_count(get_movie_list_details_modified(scrape_top_list())))
+# pprint (actors_count(get_movie_list_details_modified(scrape_top_list())))
