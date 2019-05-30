@@ -2,8 +2,6 @@ from bs4 import BeautifulSoup
 import requests,datetime
 from pprint import pprint
 
-# next1=0
-# for url in range (0,next1+2):
 y=0
 next1=2
 while y<next1:
@@ -67,5 +65,3 @@ while y<next1:
 	next2=(next_button[-2]).a.get_text()
 	next1=int(next2)
 	y+=1
-	# print (next1)
-	continue
