@@ -167,8 +167,7 @@ def scrape_movie_details(url):
 	movie_details["Country"]=country
 
 	# part of task 8 
-	fi
-	le1=open(file_name,"w")
+	file1=open(file_name,"w")
 	raw=json.dumps(movie_details)
 	file1.write(raw)
 	file1.close()
