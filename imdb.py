@@ -1,7 +1,6 @@
 import requests,os,json,time,random
 from pprint import pprint
 from bs4 import BeautifulSoup
-
 url=requests.get("https://www.imdb.com/india/top-rated-indian-movies/")
 soup=BeautifulSoup(url.text,"html.parser")
 
@@ -69,7 +68,7 @@ def grup_by_year():
 
 # this function for decade     (task 3)
 def grup_by_decade():
-	data=scrape_top_list()[:10]
+	data=scrape_top_list()
 	decade={}
 	for i in data:
 		year=str(i["year"])
@@ -118,14 +117,7 @@ def scrape_movie_details(url):
 			name=name+i
 		else:
 			break
-	# here i find runtime in  minit
-	run_time=soup.find("div",class_="subtext").time.get_text().strip()
-	runtime_hour=int(run_time[0])*60
-	runtime_min=0
-	if "min" in run_time:
-		runtime_min=int(run_time[3:].strip("min"))+runtime_hour
-	else:
-		runtime_min=runtime_hour
+			
 
 	# here i find gener
 	gener=soup.find("div",class_="subtext")
@@ -141,25 +133,42 @@ def scrape_movie_details(url):
 	director=director_div.find_all("a")
 	director_name=[i.get_text() for i in director]
 
-	# here i find contry and language 
-	extra_details=soup.find("div",attrs={"class":"article","id":"titleDetails"})
-	list_of_divs=extra_details.find_all("div",class_="txt-block")
-	for div in list_of_divs:
-		tag_h4=div.find_all("h4")
-		for i in tag_h4:
-			if "Country" in i.text:
-				tag_anchor=div.find_all("a")
-				country="".join([j.get_text() for j in tag_anchor])
-			elif "Language" in i.text:
-				tag_anchor=div.find_all("a")
-				language=[j.get_text() for j in tag_anchor]
+		
+        # here i find country and language and runtime
+	county_lang_div=soup.find("div",attrs={"class":"article","id":"titleDetails"})
+	country_div=county_lang_div.find_all(class_="txt-block")
+	language=[]
+	for i in country_div:
+		try:
+			a=(i.find("h4")).text
+			# for country
+			if a=="Country:":
+				country=(i.a.text)
+
+			# for language	
+			elif "Language:" in a:
+				language_div=(i.find_all("a"))
+				for j in language_div:
+					language.append(j.text)
+
+			# for runtime		
+			elif a=="Runtime:":
+				time=(i.time.text)
+				new_time=''
+				for k in time:
+					if k in "minhr ":
+						pass
+					else:
+						new_time+=k
+		except AttributeError:
+			continue
 
 	# here i find poster url
 	poster="https://www.imdb.com"+soup.find("div",class_="poster").find("a").get("href")
 
 	# here i add all data in a dictenory
 	movie_details["name"]=name.strip()
-	movie_details["runtime"]=runtime_min
+	movie_details["runtime"]=new_time
 	movie_details["gener"]=movie_gener
 	movie_details["bio"]=bio
 	movie_details["director"]=director_name
