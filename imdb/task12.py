@@ -5,9 +5,7 @@ from task1 import data
 def scrape_movie_cast(movie_cast_url):
 	# caching ke liye
 	url_id=""
-	for i in movie_cast_url[27:36]:
-		url_id+=i
-	id_name=url_id+"_cast.json"
+	id_name=movie_cast_url[27:36]+"_cast.json"
 	if os.path.isfile("cast_json/"+id_name):
 		a=open("cast_json/"+id_name,"r")
 		a_data=a.read()
