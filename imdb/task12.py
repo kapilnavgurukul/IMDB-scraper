@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 from task1 import data
 def scrape_movie_cast(movie_cast_url):
 	# caching ke liye
-	url_id=""
 	id_name=movie_cast_url[27:36]+"_cast.json"
 	if os.path.isfile("cast_json/"+id_name):
 		a=open("cast_json/"+id_name,"r")
